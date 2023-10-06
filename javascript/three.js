@@ -1,6 +1,6 @@
 import gsap, { Circ } from "gsap";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(innerWidth, innerHeight);
@@ -31,7 +31,7 @@ const assetLoader = new GLTFLoader();
 let car;
 let mixer;
 let action;
-assetLoader.load("../static/models/car/scene.gltf", (gltf) => {
+assetLoader.load("models/car/scene.gltf", (gltf) => {
   car = gltf.scene;
   car.position.set(0.3, 0, -0.3);
   scene.add(car);
@@ -56,7 +56,7 @@ assetLoader.load("../static/models/car/scene.gltf", (gltf) => {
 scene.fog = new THREE.Fog(0x000000, 0.01, 10);
 
 const textureLoader = new THREE.TextureLoader();
-textureLoader.load("../static/asphalt.jpg", (tex) => {
+textureLoader.load("asphalt.jpg", (tex) => {
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.repeat.x = 5;
   tex.repeat.y = 5;
