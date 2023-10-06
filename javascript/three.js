@@ -31,7 +31,7 @@ const assetLoader = new GLTFLoader();
 let car;
 let mixer;
 let action;
-assetLoader.load("/static/models/car/scene.gltf", (gltf) => {
+assetLoader.load("../static/models/car/scene.gltf", (gltf) => {
   car = gltf.scene;
   car.position.set(0.3, 0, -0.3);
   scene.add(car);
