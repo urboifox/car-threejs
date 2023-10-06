@@ -2,7 +2,7 @@ import gsap, { Circ } from "gsap";
 import * as THREE from "three";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import asphalt from "../static/asphalt.jpg";
+import asphalt from "/asphalt.jpg";
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(innerWidth, innerHeight);
