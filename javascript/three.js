@@ -1,6 +1,5 @@
-import gsap, { Circ } from "gsap";
+import gsap from "gsap";
 import * as THREE from "three";
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import asphalt from "/asphalt.jpg";
 
@@ -10,20 +9,19 @@ renderer.setPixelRatio(devicePixelRatio);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.shadowMap.enabled = true;
 renderer.setClearAlpha(0);
-
-export let loaded = false;
-export let position = 0;
+const bg_color = "#000";
+let position = 0;
 let isAnimating = true;
 
 // renderer.toneMapping = THREE.ACESFilmicToneMapping;
-document.body.appendChild(renderer.domElement);
+document.getElementById("app").appendChild(renderer.domElement);
+renderer.domElement.id = `car-canvas`;
 const camera = new THREE.PerspectiveCamera(
   75,
   innerWidth / innerHeight,
   0.1,
   1000
 );
-// const controls = new OrbitControls(camera, renderer.domElement);
 camera.position.set(1, 10, 2.5);
 
 const scene = new THREE.Scene();
@@ -35,7 +33,6 @@ let mixer;
 let action;
 assetLoader.load("../models/car/scene.gltf", (gltf) => {
   car = gltf.scene;
-  car.position.set(0.3, 0, -0.3);
   scene.add(car);
   mixer = new THREE.AnimationMixer(car);
   const clips = gltf.animations;
@@ -55,7 +52,7 @@ assetLoader.load("../models/car/scene.gltf", (gltf) => {
   carbon.castShadow = true;
 });
 
-scene.fog = new THREE.Fog(0x000000, 0.01, 10);
+scene.fog = new THREE.Fog(bg_color, 0.01, 10);
 
 const textureLoader = new THREE.TextureLoader();
 textureLoader.load(asphalt, (tex) => {
@@ -105,7 +102,8 @@ addEventListener("resize", () => {
 });
 
 function handleLoad() {
-  loaded = true;
+  document.querySelector(".loading").style.display = "none";
+  handleText();
   moveCamera(2, 1.5, 2.5, 2, 0.5);
 }
 
@@ -128,11 +126,11 @@ addEventListener("wheel", function (event) {
         moveCamera(2, 1.5, 2.5, 2, 0);
         break;
       case 1:
-        moveCamera(6, 1, 0, 2, 0);
+        moveCamera(0, 1, 5, 2, 0);
         if (prevPosition === 2) closeDoors();
         break;
       case 2:
-        moveCamera(-2, 1.5, 2.5, 2, 0);
+        moveCamera(-2, 1.2, -2.3, 2, 0);
         openDoors();
         break;
       case 3:
@@ -151,7 +149,6 @@ function moveCamera(x, y, z, duration, delay) {
     y,
     z,
     duration,
-    ease: Circ.easeOut,
     delay,
     onComplete: () => {
       isAnimating = false;
@@ -173,4 +170,13 @@ function closeDoors() {
   action.loop = true;
   action.repetitions = 1;
   action.timeScale = -2;
+}
+
+function handleText() {
+  gsap.from(".headline", {
+    opacity: 0,
+    duration: 1,
+    delay: 1.5,
+    y: 50,
+  });
 }
