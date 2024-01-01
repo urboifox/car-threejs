@@ -9,7 +9,8 @@
 
 body {
   background-color: var(--bg-color);
-  font-family: "Roboto", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: white;
   overflow-x: hidden;
 }
@@ -43,4 +44,53 @@ body {
   left: 0;
   background-color: var(--bg-color);
   color: white;
+}
+
+#features {
+  opacity: 0;
+  position: fixed;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 0;
+  left: 0;
+  h2 {
+    font-size: 5rem;
+    margin-top: 4rem;
+    font-weight: 400;
+    letter-spacing: 0.5rem;
+    color: #ccc;
+    transform: translateY(-2rem);
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: clamp(50%, 1000px, 80%);
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, 0);
+    left: 50%;
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 1.2rem;
+      font-weight: 100;
+      color: #ccc;
+    }
+  }
+}
+
+#doors {
+  position: fixed;
+  bottom: 10rem;
+  right: 5rem;
+  opacity: 0;
+  h2 {
+    font-size: 4rem;
+    font-weight: 200;
+  }
 }

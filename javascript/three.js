@@ -101,10 +101,101 @@ addEventListener("resize", () => {
   camera.updateProjectionMatrix();
 });
 
+(function () {
+  const doors = document.querySelector("#doors h2");
+  const doorsText = doors.innerHTML;
+  doors.innerHTML = "";
+  for (let i = 0, len = doorsText.length; i < len; i++) {
+    const span = document.createElement("span");
+    span.innerText = doorsText[i];
+    doors.appendChild(span);
+  }
+})();
+
 function handleLoad() {
   document.querySelector(".loading").style.display = "none";
   handleText();
   moveCamera(2, 1.5, 2.5, 2, 0.5);
+}
+
+function hideHeading() {
+  gsap.to(".headline", {
+    opacity: 0,
+    duration: 1,
+    y: -50,
+  });
+}
+
+function showHeading() {
+  gsap.fromTo(
+    ".headline",
+    {
+      opacity: 0,
+      y: -50,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      delay: 1.5,
+    }
+  );
+}
+
+function showFeatures() {
+  gsap.to("#features", {
+    opacity: 1,
+    duration: 1,
+    delay: 1.5,
+  });
+  gsap.to("#features h2", {
+    opacity: 1,
+    duration: 1,
+    y: 0,
+    delay: 1.5,
+  });
+  gsap.fromTo(
+    "#features ul li",
+    {
+      x: 20,
+      opacity: 0,
+    },
+    {
+      delay: 1.5,
+      x: 0,
+      opacity: 1,
+      stagger: 0.2,
+    }
+  );
+}
+
+function hideFeatures() {
+  gsap.to("#features", {
+    opacity: 0,
+    duration: 0.7,
+  });
+}
+
+function showDoorsSection() {
+  gsap.to("#doors", { opacity: 1, duration: 1, delay: 1 });
+  gsap.fromTo(
+    "#doors h2 span",
+    {
+      y: 20,
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.5,
+      stagger: 0.1,
+      delay: 1.5,
+    }
+  );
+}
+
+function hideDoorsSection() {
+  gsap.to("#doors", { opacity: 0, duration: 1 });
 }
 
 addEventListener("wheel", function (event) {
@@ -124,18 +215,26 @@ addEventListener("wheel", function (event) {
     switch (position) {
       case 0:
         moveCamera(2, 1.5, 2.5, 2, 0);
+        showHeading();
+        hideFeatures();
         break;
       case 1:
         moveCamera(0, 1, 5, 2, 0);
+        hideHeading();
+        showFeatures();
+        hideDoorsSection();
         if (prevPosition === 2) closeDoors();
         break;
       case 2:
         moveCamera(-2, 1.2, -2.3, 2, 0);
         openDoors();
+        hideFeatures();
+        showDoorsSection();
         break;
       case 3:
         moveCamera(3, 2, 2, 2, 0);
         closeDoors();
+        hideDoorsSection();
         break;
       default:
         break;
